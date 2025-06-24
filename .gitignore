@@ -1,0 +1,28 @@
+# Node modules 
+/node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Builds
+frontend/build/
+frontend/dist/
+backend/build/
+backend/dist/
+
+# config files
+frontend/src/utils/config.js
+
+# Env files
+*.env
+**/.env
+
+# Logs
+*.log
+
+# OS / Editor junk
+.DS_Store
+*.swp
+
+# Editor folders
+.vscode/
+.idea/
