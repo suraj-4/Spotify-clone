@@ -25,8 +25,6 @@ const LoggedInContainer = ({children}) => {
         if (!currentSong) {
             return;
         }
-
-        console.log("Here");
         changeSong(currentSong.track);
     }, [currentSong && currentSong.track]);
 

@@ -6,7 +6,7 @@ const SingleCardSong = ({songData}) => {
     const { currentSong, setCurrentSong } = useContext(SongContext);
 
     if (!songData) {
-        return <p>Sorry! No data available</p>;
+        return ;
     }
     return (
         <>

@@ -6,8 +6,9 @@ import '../src/assets/js/custom';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginComponent from "./pages/Login";
 import SignupComponent from "./pages/Signup";
-import SongUploadComponent from "./pages/SongUpload"
-import LatestSongListComponent from "./pages/LatestSongList"
+import SongUploadComponent from "./pages/SongUpload";
+import LatestSongListComponent from "./pages/LatestSongList";
+import SearchPage from "./pages/SearchPage";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
 import HomeComponent from './pages/Home';
@@ -28,6 +29,7 @@ function App() {
             <Route path='/' element={<HomeComponent />} />
             <Route path='/upload-song' element={<SongUploadComponent />} />
             <Route path='/latest-song' element={<LatestSongListComponent />} />
+            <Route path='/search' element={<SearchPage/>} />
             <Route path='*' element={<Navigate to="/" />} />
           </Routes>
         </SongContext.Provider>

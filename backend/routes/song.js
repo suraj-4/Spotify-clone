@@ -54,9 +54,9 @@ router.get('/songname/:songName', passport.authenticate("jwt",{session : false})
     const { songName } = req.params;
     try {
         //pattern matching instead of exact name matching
-        // const song = await Song.find({ songName: { $regex: songName, $options: 'i' } });
+        const song = await Song.find({ songName: { $regex: songName, $options: 'i' } }).populate("artist");
         
-        const song = await Song.find({ songName: songName });
+        // const song = await Song.find({ songName: songName }).populate("artist");
         if (!song || song.length === 0) {
             return res.status(404).json({ message: "Song not found" });
         }

@@ -20,7 +20,7 @@ const username = process.env.MONGO_USER;
 const password = process.env.MONGO_PASSWORD;
 const cluster = process.env.MONGO_CLUSTER;
 
-const uri = `mongodb+srv://${username}:${password}@${cluster}/?retryWrites=true&w=majority&appName=Cluster0`
+const uri = `mongodb+srv://${username}:${password}@${cluster}/spotify-clone?retryWrites=true&w=majority&appName=Cluster0`
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -37,7 +37,7 @@ let opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'thisKeyIsSecret';
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-  User.findOne({id: jwt_payload.sub}, function(err, user) {
+  User.findOne({_id: jwt_payload.identifier}, function(err, user) {
     if (err) {
       return done(err, false);
     }
