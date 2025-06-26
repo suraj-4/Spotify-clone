@@ -15,12 +15,15 @@ import SongContext from './contexts/songContext';
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
+  const [musicPlayed,setMusicPlayed] = useState(null);
+  const [isPause, setIsPause] = useState(true);
+
   const [cookie ,setCookie] = useCookies(["token"]);
   return (
     <BrowserRouter>
       {cookie.token ?(
         // login in
-        <SongContext.Provider value={{currentSong, setCurrentSong}}>
+        <SongContext.Provider value={{currentSong, setCurrentSong, musicPlayed, setMusicPlayed, isPause, setIsPause}}>
           <Routes>
             <Route path='/' element={<HomeComponent />} />
             <Route path='/upload-song' element={<SongUploadComponent />} />

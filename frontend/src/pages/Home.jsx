@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// import {Howl, Howler} from 'howler';
 import { useState, useEffect } from "react";
 import { makeAuthenticatedGETRequest } from "../utils/serverHelpers";
 import LoggedInContainer from "../layout/LoggedInContainer";
@@ -34,7 +33,7 @@ const HomeComponent = () => {
                         <div className="card_style_two_wrapper">
                             {
                                 songsData.slice(0, 5).map((item) =>{
-                                    return <SingleCardSong songData={item} playMusic={()=>{}}/>;
+                                    return <SingleCardSong songData={item}/>;
                                 })
                             }
                         </div>

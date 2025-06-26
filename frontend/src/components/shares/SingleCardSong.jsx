@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import SongContext from '../../contexts/songContext';
 
-const SingleCardSong = ({songData, playMusic}) => {
+const SingleCardSong = ({songData}) => {
     const { currentSong, setCurrentSong } = useContext(SongContext);
 
     if (!songData) {
@@ -14,7 +14,7 @@ const SingleCardSong = ({songData, playMusic}) => {
             <div className="image_outer_wrap">
                 <div className="image_wrap">
                     {songData.thumbnail ? (
-                        <img src={songData.thumbnail} alt="album" />
+                        <img src={songData.thumbnail} alt={songData.songName} />
                     ) : (
                         <p>No thumbnail</p>
                     )}
@@ -28,7 +28,7 @@ const SingleCardSong = ({songData, playMusic}) => {
                 </div>
             </div>
             <div className="name_wrap_one">
-                <h6><Link to="#">{songData.songName || "Unknown Song"}</Link></h6>
+                <h6>{songData.songName || "Unknown Song"}</h6>
                 <ul className="singer_name_one">
                     <li><Link to="#">{songData.artist.firstName || "Unknown Artist"}</Link></li>
                 </ul>

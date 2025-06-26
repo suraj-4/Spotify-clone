@@ -11,7 +11,6 @@ const SongUploadComponent = ()=> {
     const [songName , setSongName] = useState("");
     const [thumbnail , setThumbnail] = useState("");
     const [track, setTrack] = useState(null);
-    const [playlistUrl , setPlaylistUrl] = useState("");
     const [uploadProgress, setUploadProgress] = useState(0);
     const navigate = useNavigate();
 

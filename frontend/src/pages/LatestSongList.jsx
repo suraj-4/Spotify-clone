@@ -3,12 +3,10 @@ import LoggedInContainer from "../layout/LoggedInContainer";
 import { makeAuthenticatedGETRequest } from "../utils/serverHelpers";
 import SingleListSong from "../components/shares/SingleListSong";
 import SingleCardSong from "../components/shares/SingleCardSong";
-import {Howl, Howler} from 'howler';
 
 
 const LatestSongListComponent = ()=> {
     const [songsData ,setSongsData] = useState([]);
-    // const [musicPlayed,setMusicPlayed] = useState(null);
 
     useEffect(() => {
         // fetch data
@@ -23,17 +21,6 @@ const LatestSongListComponent = ()=> {
         getData(); 
     },[]);
 
-    // const playMusic = (songSrc) => {
-    //     if(musicPlayed){
-    //         musicPlayed.stop();
-    //     }
-    //     let music = new Howl({
-    //         src: [songSrc],
-    //         html5: true
-    //     });
-    //     setMusicPlayed(music);
-    //     music. play ();
-    // }
 
     return (
         <LoggedInContainer>
@@ -46,7 +33,7 @@ const LatestSongListComponent = ()=> {
                         <div className="col-4">
                         {
                             songsData[0] ? (
-                                <SingleCardSong songData={songsData[0]} playMusic={()=>{}} />
+                                <SingleCardSong songData={songsData[0]} />
                             ) : (
                                 <p>No song found</p>
                             )
@@ -56,7 +43,7 @@ const LatestSongListComponent = ()=> {
                             <div className="song_list_container">
                                 {
                                     songsData.slice(0, 4).map((item) =>{
-                                        return <SingleListSong songData={item} playMusic={()=>{}}/>;
+                                        return <SingleListSong songData={item}/>;
                                     })
                                 }
                             </div>
@@ -70,7 +57,7 @@ const LatestSongListComponent = ()=> {
                     <div className="song_list_container ">
                         {
                             songsData.map((item) =>{
-                                return <SingleListSong songData={item} playMusic={()=>{}}/>;
+                                return <SingleListSong songData={item}/>;
                             })
                         }
                     </div>
