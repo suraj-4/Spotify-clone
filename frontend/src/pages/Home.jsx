@@ -24,66 +24,64 @@ const HomeComponent = () => {
     },[]);
 
     return (
-        <>
-            <LoggedInContainer>
-                <div className="row__outer_wrapper home">
-                    { songsData.length > 0 && (
-                        <div className="row_wrapper">
-                            <div className="sec_heading">
-                                <h3><Link to="/latest-song">Latest Songs</Link></h3>
-                                <Link to="/latest-song">See all</Link>
-                            </div>
-                            <div className="card_style_two_wrapper">
-                                {
-                                    songsData.slice(0, 5).map((item) =>{
-                                        return <SingleCardSong songData={item}/>;
-                                    })
-                                }
-                            </div>
-                        </div>
-                    )}
-             
-                    { trendingSongs.length > 0 && (
-                        <div className="row_wrapper">
-                            <div className="sec_heading">
-                                <h3><Link to="/trending-song">Trending songs</Link></h3>
-                                <Link to="/trending-song">See all</Link>
-                            </div>
-                            <div className="card_style_two_wrapper">
-                                <SingleCardSong songName="Helllo"/>
-                                <SingleCardSong songName="Bro"/>
-                                <SingleCardSong songName="Mera"/>
-                                <SingleCardSong songName="Masti"/>
-                            </div>
-                        </div>
-                    )}
-
-                    { recentlyPlayedSongs.length > 0 && (
+        <LoggedInContainer>
+            <div className="row__outer_wrapper home">
+                { songsData.length > 0 && (
                     <div className="row_wrapper">
-                        <div className="sec_heading mb-4">
-                            <h3><Link to="/recently-play">Recently Play</Link></h3>
-                            <Link to="/recently-play">See all</Link>
+                        <div className="sec_heading">
+                            <h3><Link to="/latest-song">Latest Songs</Link></h3>
+                            <Link to="/latest-song">See all</Link>
+                        </div>
+                        <div className="card_style_two_wrapper">
+                            {
+                                songsData.slice(0, 5).map((item) =>{
+                                    return <SingleCardSong songData={item}/>;
+                                })
+                            }
+                        </div>
+                    </div>
+                )}
+            
+                { trendingSongs.length > 0 && (
+                    <div className="row_wrapper">
+                        <div className="sec_heading">
+                            <h3><Link to="/trending-song">Trending songs</Link></h3>
+                            <Link to="/trending-song">See all</Link>
                         </div>
                         <div className="card_style_two_wrapper">
                             <SingleCardSong songName="Helllo"/>
-                        </div>
-                    </div>
-                    )}
-                    { popularSongs.length > 0 && (
-                    <div className="row_wrapper">
-                        <div className="sec_heading mb-4">
-                            <h3><Link to="/popular-song">Popular Songs</Link></h3>
-                            <Link to="/popular-song">See all</Link>
-                        </div>
-                        <div className="card_style_two_wrapper">
+                            <SingleCardSong songName="Bro"/>
                             <SingleCardSong songName="Mera"/>
                             <SingleCardSong songName="Masti"/>
                         </div>
                     </div>
-                    )}
+                )}
+
+                { recentlyPlayedSongs.length > 0 && (
+                <div className="row_wrapper">
+                    <div className="sec_heading mb-4">
+                        <h3><Link to="/recently-play">Recently Play</Link></h3>
+                        <Link to="/recently-play">See all</Link>
+                    </div>
+                    <div className="card_style_two_wrapper">
+                        <SingleCardSong songName="Helllo"/>
+                    </div>
                 </div>
-            </LoggedInContainer>
-        </>
+                )}
+                { popularSongs.length > 0 && (
+                <div className="row_wrapper">
+                    <div className="sec_heading mb-4">
+                        <h3><Link to="/popular-song">Popular Songs</Link></h3>
+                        <Link to="/popular-song">See all</Link>
+                    </div>
+                    <div className="card_style_two_wrapper">
+                        <SingleCardSong songName="Mera"/>
+                        <SingleCardSong songName="Masti"/>
+                    </div>
+                </div>
+                )}
+            </div>
+        </LoggedInContainer>
     );
 }
 

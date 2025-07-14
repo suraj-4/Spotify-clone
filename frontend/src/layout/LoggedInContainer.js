@@ -1,12 +1,13 @@
 import HeaderComponent from "./header";
 import SidebarComponent from "./sidebar";
 import FooterComponent from "./footer";
+import AddToPlaylistModal from "../models/addToPlaylistModal"
 import {Howl, Howler} from 'howler';
 import { Link } from 'react-router-dom';
 import { useState, useContext, useLayoutEffect, useRef } from "react";
 import { useCookies } from 'react-cookie';
 import SongContext from '../contexts/songContext';
-// import albumImg from "../assets/img/album-img-1.jpg";
+import { makeAuthenticatedPOSTRequest } from "../utils/serverHelpers";
 
 
 const LoggedInContainer = ({children}) => {
@@ -27,6 +28,12 @@ const LoggedInContainer = ({children}) => {
         }
         changeSong(currentSong.track);
     }, [currentSong && currentSong.track]);
+
+    const addSongToPlaylist = async(playlistId) => {
+        const songId = currentSong ._id
+        const payload = {playlistId, songId}
+        const response = await makeAuthenticatedPOSTRequest("/playlist/add/song", payload);
+    };
 
     const playMusic = () => {
         if (!musicPlayed) {
@@ -51,6 +58,7 @@ const LoggedInContainer = ({children}) => {
     const pauseMusic = () => {
         musicPlayed.pause();
     }
+
     const togglePlayPause = () => {
         if (isPause) {
             playMusic();
@@ -101,16 +109,30 @@ const LoggedInContainer = ({children}) => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="likeSong_icons">
-                                <div className="plus_icon">
-                                    <svg clip-rule="evenodd" fill="#fff" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="m12.002 2c5.518 0 9.998 4.48 9.998 9.998 0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997 0-5.518 4.48-9.998 9.997-9.998zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497-3.808-8.498-8.498-8.498zm-.747 7.75h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/>
-                                    </svg>
+                            <div class="saveSong_wrapper">
+                                <div className="playlist_icons" data-bs-toggle="modal" data-bs-target="#AddToPlaylistModal">
+                                    <div className="plus_icon">
+                                        <svg clip-rule="evenodd" fill="#fff" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m12.002 2c5.518 0 9.998 4.48 9.998 9.998 0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997 0-5.518 4.48-9.998 9.997-9.998zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497-3.808-8.498-8.498-8.498zm-.747 7.75h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/>
+                                        </svg>
+                                    </div>
+                                    <div className="circleCheck_icon">
+                                        <svg clip-rule="evenodd" fill="#3BE477" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z" fill-rule="nonzero"/>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <div className="circleCheck_icon">
-                                    <svg clip-rule="evenodd" fill="#3BE477" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z" fill-rule="nonzero"/>
-                                    </svg>
+                                <div className="likeSong_icons" >
+                                    <div className="like_icon">
+                                        <svg clip-rule="evenodd" fill="#fff" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m7.234 3.004c-2.652 0-5.234 1.829-5.234 5.177 0 3.725 4.345 7.727 9.303 12.54.194.189.446.283.697.283s.503-.094.697-.283c4.977-4.831 9.303-8.814 9.303-12.54 0-3.353-2.58-5.168-5.229-5.168-1.836 0-3.646.866-4.771 2.554-1.13-1.696-2.935-2.563-4.766-2.563zm0 1.5c1.99.001 3.202 1.353 4.155 2.7.14.198.368.316.611.317.243 0 .471-.117.612-.314.955-1.339 2.19-2.694 4.159-2.694 1.796 0 3.729 1.148 3.729 3.668 0 2.671-2.881 5.673-8.5 11.127-5.454-5.285-8.5-8.389-8.5-11.127 0-1.125.389-2.069 1.124-2.727.673-.604 1.625-.95 2.61-.95z" fill-rule="nonzero"/>
+                                        </svg>
+                                    </div>
+                                    <div className="circleCheck_icon">
+                                        <svg clip-rule="evenodd" fill="#3BE477" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m12 5.72c-2.624-4.517-10-3.198-10 2.461 0 3.725 4.345 7.727 9.303 12.54.194.189.446.283.697.283s.503-.094.697-.283c4.977-4.831 9.303-8.814 9.303-12.54 0-5.678-7.396-6.944-10-2.461z" fill-rule="nonzero"/>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -205,6 +227,10 @@ const LoggedInContainer = ({children}) => {
             </div>
             )}
 
+            {/* Create Playlist Modal */}
+            <div className="modal fade" id="AddToPlaylistModal" tabIndex="-1" aria-labelledby="AddToPlaylistModalLabel" aria-hidden="true">
+                <AddToPlaylistModal addSongToPlaylist = {addSongToPlaylist} />
+            </div>
         </main>
 
         </>
@@ -213,3 +239,5 @@ const LoggedInContainer = ({children}) => {
 
 
 export default LoggedInContainer;
+
+

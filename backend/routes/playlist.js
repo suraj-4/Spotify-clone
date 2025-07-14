@@ -43,6 +43,20 @@ router.get('/get-ById/:playlistId', passport.authenticate('jwt', {session:false}
     }
 });
 
+// Get all playlists 
+router.get('/get/me', passport.authenticate('jwt', {session:false}), async (req, res) => {
+    const artistId = req.user._id;
+    try {
+        const playlists = await Playlist.find({ owner: artistId }).populate("owner");
+        if (!playlists || playlists.length === 0) {
+            return res.status(404).json({ message: 'No playlists found for this artist' });
+        }
+        res.status(200).json({playlists, message: 'Playlists found' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching playlists', error });
+    }
+});
+
 // Get all playlists made by an Artist ID
 router.get('/get/artist/:artistId', passport.authenticate('jwt', {session:false}), async (req, res) => {
     const artistId = req.params.artistId;
@@ -65,20 +79,45 @@ router.get('/get/artist/:artistId', passport.authenticate('jwt', {session:false}
 // Add a song to a playlist
 router.post('/add/song',passport.authenticate('jwt', {session : false}), async(req,res)=>{
     const currentUser = req.user;
-    const {playlistId, songsId} = req.body;
-    const playlist = await Playlist.findOne({_id:playlistId});
-    if (!playlist){
-        res.status(304).json({err: 'Playlists does not exist' });
+    try{
+        const { playlistId, songId } = req.body;
+
+        if (!playlistId || !songId) {
+        return res.status(400).json({ error: 'Playlist ID and Song ID are required' });
+        }
+
+        const playlist = await Playlist.findById(playlistId);
+        if (!playlist) {
+        return res.status(404).json({ error: 'Playlist does not exist' });
+        }
+
+        // Check ownership or collaboration
+        const isOwner = playlist.owner.equals(currentUser._id);
+        const isCollaborator = playlist.collaborators.includes(currentUser._id);
+
+        if (!isOwner && !isCollaborator) {
+        return res.status(403).json({ error: 'Access denied' });
+        }
+
+        const song = await Song.findById(songId);
+        if (!song) {
+        return res.status(404).json({ error: 'Song does not exist' });
+        }
+
+        // Add song if not already present
+        if (playlist.songs.includes(songId)) {
+        return res.status(409).json({ error: 'Song already exists in playlist' });
+        }
+
+        playlist.songs.push(songId);
+        await playlist.save();
+
+        return res.status(200).json({ message: 'Song added to playlist successfully' });
+
+    }catch (error) {
+        res.status(500).json({ message: "Failed to add song to playlist", error });
     }
-    if (!playlist.owner.equals(currentUser._id) && !playlist.collaborators.includes(currentUser._id)){
-        res.status(400).json({err: 'Not Allowed' });
-    }
-    const song = await Song.findOne({_id:songsId});
-    if (!song){
-        res.status(304).json({err: 'Song does not exist' });
-    }
-    playlist.songs.push(songsId);
-    await playlist.save();
-    res.status(200).json({playlist, message: 'Created playlist with song Successfully' });
+
+
 });
 module.exports = router;

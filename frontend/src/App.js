@@ -1,18 +1,19 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../src/assets/css/main.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import '../src/assets/js/custom';
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginComponent from "./pages/Login";
-import SignupComponent from "./pages/Signup";
-import SongUploadComponent from "./pages/SongUpload";
-import LatestSongListComponent from "./pages/LatestSongList";
-import SearchPage from "./pages/SearchPage";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
-import HomeComponent from './pages/Home';
 import SongContext from './contexts/songContext';
+import LoginComponent from "./pages/Login";
+import SignupComponent from "./pages/Signup";
+import HomeComponent from './pages/Home';
+import SongUploadComponent from "./pages/SongUpload";
+import SearchPage from "./pages/SearchPage";
+import LatestSongListComponent from "./pages/LatestSongList";
+import Library from "./pages/library";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -30,6 +31,7 @@ function App() {
             <Route path='/upload-song' element={<SongUploadComponent />} />
             <Route path='/latest-song' element={<LatestSongListComponent />} />
             <Route path='/search' element={<SearchPage/>} />
+            <Route path='/library' element={<Library/>}/>
             <Route path='*' element={<Navigate to="/" />} />
           </Routes>
         </SongContext.Provider>

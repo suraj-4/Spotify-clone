@@ -15,7 +15,6 @@ const HeaderComponent = () => {
             if (resultData){
                 navigate("/search", { state: { results: resultData } });
             }
-            console.log(resultData); 
         } catch (error) {
             console.error("Error fetching search results:", error);
         }

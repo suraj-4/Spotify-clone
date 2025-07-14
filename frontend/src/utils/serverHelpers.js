@@ -4,9 +4,9 @@ export const makeUnauthenticatedPOSTRequest = async(route ,body) =>{
         const response = await fetch(API_BASE + route, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(body),
+            body: JSON.stringify(body)
         });
 
         const formattedResponse = await response.json();
@@ -23,16 +23,16 @@ export const makeAuthenticatedPOSTRequest = async(route ,body) =>{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization" : `Bearer ${token}`,
+                "Authorization" : `Bearer ${token}`
             },
-            body: JSON.stringify(body),
+            body: JSON.stringify(body)
         });
 
         const formattedResponse = await response.json();
         return formattedResponse;
     } catch (err) {
         console.error("Fetch error:", err);
-        return { err: true, message: "Fetch failed" };
+        return { err: true, message: "Fetch failed playlist bug" };
     }
 }
 
@@ -43,8 +43,8 @@ export const makeAuthenticatedGETRequest = async(route) =>{
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization" : `Bearer ${token}`,
-            },
+                "Authorization" : `Bearer ${token}`
+            }
         });
 
         const formattedResponse = await response.json();

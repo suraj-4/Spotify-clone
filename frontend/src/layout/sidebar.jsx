@@ -1,10 +1,18 @@
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/bootstrap/dist/js/bootstrap.bundle';
+
+import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import CreatePlaylistModal from '../models/createPlaylistModal';
+
 const SidebarComponent = () => {
     const [cookie ,setCookie] = useCookies(["token"]);
     return (
         <div className="sidebar_wrapper">
             <div className="sidebar_top_wrapper">
-                <h6 className="mb-0">Your Library</h6>
+                <div className="sec_heading px-0">
+                    <h3 className="mb-0"><Link to="/library">Your Library</Link></h3>
+                </div>
                 <div className="dropdown">
                     <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -13,15 +21,15 @@ const SidebarComponent = () => {
                     </button>
                     <ul className="dropdown-menu">
                         <li>
-                            <a className="dropdown-item" href="#">
+                            <button type="button" className="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#CreatePlaylistModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-music-note-list me-2" viewBox="0 0 20 20">
-                                    <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
-                                    <path fill-rule="evenodd" d="M12 3v10h-1V3z"/>
-                                    <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"/>
-                                    <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
+                                    <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2" />
+                                    <path fillRule="evenodd" d="M12 3v10h-1V3z" />
+                                    <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z" />
+                                    <path fillRule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
                                 </svg>
                                 <span>Create a new playlist</span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -30,7 +38,7 @@ const SidebarComponent = () => {
                 <div className="card_style_one">
                     <h6>Create your first playlist</h6>
                     <p>It's easy, we'll help you</p>
-                    <a href="#" className="btns btn_two">Create playlist</a>
+                    <a href="#" className="btns btn_two" data-bs-toggle="modal" data-bs-target="#CreatePlaylistModal">Create playlist</a>
                 </div>
                 <div className="card_style_one">
                     <h6>Let's find some podcasts to follow</h6>
@@ -56,8 +64,15 @@ const SidebarComponent = () => {
                 </a>
             </div>
             )}
+
+            {/* Create Playlist Modal */}
+            <div className="modal fade" id="CreatePlaylistModal" tabIndex="-1" aria-labelledby="CreatePlaylistModalLabel" aria-hidden="true">
+                <CreatePlaylistModal />
+            </div>
         </div>
     );
 }
 
 export default SidebarComponent;
+
+

@@ -364,7 +364,7 @@ header {
   margin-bottom: 25px;
 }
 
-.sidebar_top_wrapper .dropdown-toggle::after {
+.dropdown-toggle::after {
   display: none;
 }
 
@@ -374,7 +374,10 @@ header {
   padding: 0;
   width: 35px;
   height: 35px;
+  display: flex;
   border-radius: 50%;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar_top_wrapper .dropdown-toggle:focus-within {
@@ -385,7 +388,8 @@ header {
   background-color: var(--grey800);
 }
 
-.sidebar_top_wrapper .dropdown-menu {
+.sidebar_top_wrapper .dropdown-menu,
+.three_dots_icon .dropdown-menu {
   background-color: var(--grey800);
   border-radius: 4px;
   padding: 5px;
@@ -393,7 +397,8 @@ header {
   box-shadow: 0 0 20px var(--black);
 }
 
-.sidebar_top_wrapper .dropdown-menu .dropdown-item {
+.sidebar_top_wrapper .dropdown-menu .dropdown-item,
+.three_dots_icon .dropdown-menu .dropdown-item {
   color: var(--white);
   font-size: 14px;
   font-weight: 600;
@@ -404,7 +409,9 @@ header {
 }
 
 .sidebar_top_wrapper .dropdown-menu .dropdown-item:focus,
-.sidebar_top_wrapper .dropdown-menu .dropdown-item:hover {
+.sidebar_top_wrapper .dropdown-menu .dropdown-item:hover,
+.three_dots_icon .dropdown-menu .dropdown-item:focus,
+.three_dots_icon .dropdown-menu .dropdown-item:hover {
   color: var(--white);
   background-color: var(--grey700);
 }
@@ -630,12 +637,6 @@ footer {
   margin-bottom: 0;
 }
 
-.playController_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .signup_form_container {
   padding-block: 2rem;
   width: 100%;
@@ -745,6 +746,18 @@ footer {
   background-color: var(--grey700);
 }
 
+.card_list_wrapper {
+  padding: 8px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.card_list_wrapper:hover {
+  background-color: var(--grey700);
+}
+
 .song_details {
   gap: 15px;
   display: flex;
@@ -802,7 +815,7 @@ footer {
   gap: 1.5rem;
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr;
   background-color: var(--black);
 }
 
@@ -847,12 +860,12 @@ footer {
   text-decoration: underline;
 }
 
-.plus_icon, .circleCheck_icon {
+.plus_icon, .circleCheck_icon, .like_icon {
   width: 25px;
   height: 25px;
 }
 
-.left_side_wrapper .plus_icon {
+.left_side_wrapper .plus_icon, .like_icon {
   cursor: pointer;
 }
 
@@ -958,4 +971,13 @@ footer {
   border-radius: 50%;
   -webkit-appearance: none;
   background: var(--greenColor);
+}
+
+.saveSong_wrapper {
+  gap: 10px;
+  display: flex;
+}
+
+.btn-close {
+  filter: invert(1);
 }/*# sourceMappingURL=main.css.map */
